@@ -62,8 +62,19 @@ Server .env:
 MONGO_URL= <connection URL provided by Mongo Atlas>
 PORT=1337
 
+** Deploy to fly.io:
 # Install flyctl on GNU/Linux:
 curl -L https://fly.io/install.sh | sh
+cd to server directory
+create 'Dockerfile' with config from 'mongoose-currency issue.txt'
+flyctl launch
+flyctl deployment
+(add .env variables to 'secrets' on fly.io):
+flyctl secrets set MONGO_URL='<url provided by MongoDB Atlas>'
+flyctl secrets set PORT=3000  (what fly.io requires)
+
+(Watch your app at https://fly.io/apps/spring-bird-8579/monitoring)
+(Visit your newly deployed app at https://spring-bird-8579.fly.dev/) (doesn't display anything)
 
 Links: 
 node: https://nodejs.org/en/download/ 

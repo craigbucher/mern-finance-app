@@ -1,0 +1,123 @@
+Good news. For those who were struggling with mongoose-currency dependencies 
+conflict, I finally solved the problem after 24 hours of debugging. The main 
+issue is that mongoose-currency requires a mongoose verion 4, and that's why 
+the dependencies conflict happens. When I tried to run npm install  locally 
+in my terminal it fails due to the dependencies conflict, but when I run the 
+command:
+
+npm install --legacy-peer-deps
+
+locally in my terminal it works fine. The issue here was that the Docker file 
+generated when I run the command flyctl launch  doesn't support --legacy-peer-deps
+option, and has been taken care of by one of fly.io employees who opened an 
+issue on GitHub here https://github.com/fly-apps/dockerfile-node/issues/6. 
+
+To circumvent this issue I updated the Dockerfile to be the following:
+
+######################################
+# syntax = docker/dockerfile:1
+
+ARG NODE_VERSION=18.15.0
+FROM node:$NODE_VERSION-slim as base
+
+LABEL fly_launch_runtime="NodeJS"
+
+# NodeJS app lives here
+WORKDIR /app
+
+# Set production environment
+ENV NODE_ENV=production
+
+# Throw-away build stage to reduce size of final image
+FROM base as build
+
+# Install packages needed to build node modules
+RUN apt-get update -qq && \
+    apt-get install -y python-is-python3 pkg-config build-essential 
+
+COPY <<-"EOF" /app/package.json
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "helmet": "^6.0.1",
+    "mongoose": "^7.0.0",
+    "mongoose-currency": "^0.2.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
+EOF
+
+RUN npm install --legacy-peer-deps
+
+# Copy application code
+COPY --link . .
+
+# Remove development dependencies
+RUN npm prune --production --legacy-peer-deps
+
+# Final stage for app image
+FROM base
+
+# Copy built application
+COPY --from=build /app /app
+
+# Start the server by default, this can be overwritten at runtime
+CMD [ "npm", "run", "start" ]
+################################
+
+Also, the package.json didn't include a "start" script which caused another 
+issue while deploying. To solve this issue, I updated the package.json to be
+the following:
+
+######################################################
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "helmet": "^6.0.1",
+    "mongoose": "^7.0.0",
+    "mongoose-currency": "^0.2.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
+#######################################
+
+Finally, the app is deployed and running as it should.
+I posted the solution here just incase anyone encounters the same problem 
+or a similar problem in the future.

@@ -1,0 +1,90 @@
+https://www.youtube.com/watch?v=uoJ0Tv-BFcQ
+https://github.com/ed-roh/finance-app
+https://discord.gg/N58wa7JmDB
+edwardroh89@gmail.com
+
+Front end:
+- MaterialUI = component library
+- MaterialUI Datagrid = tables
+- Typescript = language
+- Vite = starter app
+- Recharts = chart library
+- Redux toolkit = state management
+- RTK Query = api calls (RTK query will cache api responses, so can be used across multiple components without calling api multiple times)
+- heroicons = icons
+- React router = navigation
+
+Back end:
+- node.js = runtime
+- Express.js = framework
+- mongoose = database   (ODM = object document mapping; (ORM for nosql database)) = makes it easier to interact w database
+- regression-js = machine learning
+
+VSCode extensions:
+ES7+ React/Redux/React-Native snippets
+ESLint
+Prettier ESLint
+Tailwind Shades = generate 10 shades of specified color
+
+Browser extensions:
+Redux DevTools (allows to see state of redux 'store')
+Pesticide (shows CSS element layout)
+
+(sponsor: brilliant.org/EdRoh)
+
+Client:
+npm create vite@latest client
+    React
+    Typescript
+npm i react-redux @reduxjs/toolkit react-router-dom @mui/material @emotion/react @emotion/styled @mui/icons-material @mui/x-data-grid
+(dev dependencies) npm i -D @types/react-dom
+npm i -D eslint eslint-config-react-app (create eslint settings in Vite)
+npm i -D @types/node
+npm i recharts
+npm i regression
+npm i -D @types/regression = regression typescript types
+
+Server: (see 'mongoose-currency issue.txt' in project root directory)
+npm init -y
+npm i express body-parser cors dotenv helmet morgan mongoose@latest mongoose-currency
+npm i -D nodemon
+
+"Flexbox is best for one-dimension layouts (alignment either horizontal or vertical)"
+"For alignment both horizontally and vertically, better to use grid"
+"grid-template-areas allows for very sophisticated layout"
+
+** mongodb password is in the server .env file
+
+Client .env.local:
+VITE_BASE_URL=http://localhost:1337
+
+Server .env:
+MONGO_URL= <connection URL provided by Mongo Atlas>
+PORT=1337
+
+# Install flyctl on GNU/Linux:
+curl -L https://fly.io/install.sh | sh
+
+Links: 
+node: https://nodejs.org/en/download/ 
+npx: https://www.npmjs.com/package/npx
+vscode: https://code.visualstudio.com/download
+nodemon: https://github.com/remy/nodemon
+vite: https://vitejs.dev/guide/ 
+react router: https://reactrouter.com/en/v6.3.0/getting-started/installation
+react dropzone: https://github.com/react-dropzone/react-dropzone
+redux toolkit: https://redux-toolkit.js.org/introduction/getting-started 
+redux toolkit query: https://redux-toolkit.js.org/rtk-query/overview 
+regression: https://github.com/tom-alexander/regression-js = a collection of linear least-squares fitting methods for simple data analysis (machine learning)
+mui: https://mui.com/material-ui/getting-started/
+mui data grid: https://mui.com/x/api/data-grid/data-grid/ = designed for use-cases that are focused around handling a large amounts of tabular data
+emotion: https://emotion.sh/docs/introduction = a library designed for writing css styles with JavaScript
+recharts: https://recharts.org/en-US/
+flexbox guide: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+css grid cheatsheet: https://grid.malven.co/
+lucidchart data model diagram: https://lucid.app/lucidchart/23d63d3a-f89c-472d-99d3-4c0a35c67816/edit?page=0_0#
+redux dev tools: https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en
+pesticide extension: https://chrome.google.com/webstore/detail/pesticide-for-chrome/bakpbgckdnepkmkeaiomhmfcnejndkbi
+(backend deployment) fly io node: https://fly.io/docs/languages-and-frameworks/node/
+(fronted deployment) vercel: https://vercel.com/
+docker: https://www.docker.com/products/docker-desktop/

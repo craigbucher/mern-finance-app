@@ -76,6 +76,11 @@ flyctl secrets set PORT=3000  (what fly.io requires)
 (Watch your app at https://fly.io/apps/spring-bird-8579/monitoring)
 (Visit your newly deployed app at https://spring-bird-8579.fly.dev/) (doesn't display anything)
 
+** Deploy to Vercel:
+(be sure 'VITE_BASE_URL' environment variable includes 'https://' (as above))
+(live site: https://mern-finance-app.vercel.app/)
+
+
 Links: 
 node: https://nodejs.org/en/download/ 
 npx: https://www.npmjs.com/package/npx

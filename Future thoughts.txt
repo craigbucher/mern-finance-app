@@ -1,1 +1,2 @@
-- how to specify MongoDB database name (other than 'test')
+- restrict MongoDB access to just it's IP(s), rather than 0.0.0.0
+- convert tooltip numbers to currency ($0.00)
